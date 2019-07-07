@@ -1,0 +1,6 @@
+{
+    "host" : "rm-bp160zm879riy3264.mysql.rds.aliyuncs.com",
+    "user" : "express",
+    "password" : "BDcpu!@#",
+    "database" : "express001"
+}

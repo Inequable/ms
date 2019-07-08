@@ -73,8 +73,10 @@ class Services {
                     req.connection.socket.remoteAddress || ''
             // 正则匹配ipv4
             let request_ip = ip.match(/\d+\.\d+\.\d+\.\d+/)[0]
-            let hostname = req.hostname
-            if (whitelist.indexOf(request_ip) === -1 || whitelist.indexOf(hostname) === -1) {
+            // 以下两行必须注释掉，引以为戒，因为当这个运行时，会获取到ip和域名，一个为真就返回json的，会变成(1 || -1)的关系
+            // let hostname = req.hostname
+            // if (whitelist.indexOf(request_ip) === -1 || whitelist.indexOf(hostname) === -1) {
+            if (whitelist.indexOf(request_ip) === -1) {
                 res.status(200)
                 res.json({
                     code: 1,
@@ -152,10 +154,10 @@ class Services {
         return sequelize
     }
     // 返回mongodb实例，。。。待测TODO...
-    getMongodbInstance (callback) {
+    async getMongodbInstance () {
         const dbConfig = this.getDBConfig('mongodb')
         const Mongodb = this.loadConnector('mongodb')
-        const mongodb = new Mongodb(dbConfig)
+        const instance = await new Mongodb(dbConfig)
         // const instance = mongodb.getMongoDB(callback(dbo, mongodb), dbConfig)
         return instance
     }

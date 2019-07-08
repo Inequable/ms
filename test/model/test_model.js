@@ -18,7 +18,7 @@ module.exports = class TestDBModel{
     getLogisticsAll () {
         const instdb = service.getMysqlInstance()
         return new Promise((resolve, reject) => {
-            let sql = 'SELECT * FROM `ws_workflow_list`'
+            let sql = 'SELECT * FROM `receptacles`'
             instdb.query(sql, function (err, rows, fields) {
                 if (err) throw err
                 resolve(rows)
@@ -29,16 +29,19 @@ module.exports = class TestDBModel{
 
     // 测试mongodb数据库查询操作
     getAppsAll () {
-        return new Promise((resolve, reject) => {
-            let db = new MongoDB()
-            db.getMongoDB(function (dbo, db) {
-                dbo.collection("apps").find({}).toArray(function(err, result) { // 返回集合中所有数据
-                    if (err) throw err
-                    resolve(result)
-                })
-                db.close()
-            }, mdbConfig)
-        })
+        const instdb = service.getMongodbInstance()
+        return instdb
+        // return new Promise((resolve, reject) => {
+        //     let db = new MongoDB()
+        //     db.getMongoDB(function (dbo, db) {
+        //         dbo.collection("apps").find({}).toArray(function(err, result) { // 返回集合中所有数据
+        //             if (err) throw err
+        //             resolve(result)
+        //         })
+        //         db.close()
+        //     }, mdbConfig)
+        //     resolve(instdb.find('apps', {}))
+        // })
     }
 
     getRedisSet () {

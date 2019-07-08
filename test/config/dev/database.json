@@ -1,9 +1,9 @@
 {
-    "host": "localhost",
+    "host": "192.168.10.10",
     "port": "3306",
-    "user": "root",
-    "password": "2015329122",
-    "database": "test",
+    "user": "saturn001",
+    "password": "newlife123",
+    "database": "owdile001",
     "dialect": "mysql",
     "option": {
         "timezone": "+08:00",

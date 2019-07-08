@@ -29,6 +29,8 @@ class Mongodb {
             let instance, username_password, url
             username_password = config.username ? config.username + ':' + config.password + '@' : ''
             url = 'mongodb://' + username_password + config.host + ':' + (config.port ? config.port : 27017) + '/'
+            // https://www.runoob.com/mongodb/mongodb-connections.html 参考文献
+            // url = 'mongodb://user:pass@host, host1, host2.../authdb?replicaSet=验证replica set的名称'
             MongoClient.connect(url, { useNewUrlParser: true }, function (err, client) {
                 if (err) {
                     console.log('mongodb连接失败')
@@ -36,6 +38,7 @@ class Mongodb {
                 } else {
                     instance = client.db(config.db)
                     Mongodb.instance = instance
+                    console.log('mongodb连接成功')
                     resolve(instance)
                 }
             })

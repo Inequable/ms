@@ -23,9 +23,9 @@ router.get('/testdb', async (req, res) => {
     res.json(result)
 })
 
-router.get('/testMongodb', async (req, res) => {
+router.get('/testMongodb', (req, res) => {
     const model = new TestDBModel()
-    const result = await model.getAppsAll()
+    const result = model.getAppsAll()
     res.json(result)
 })
 

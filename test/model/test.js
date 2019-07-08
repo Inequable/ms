@@ -8,9 +8,9 @@ class TestModel extends Model {
     getAll () {
         return new Promise((resolve, reject) => {
             TestModel.findAll({
-                attributes: { include: ['name'] }
+                attributes: { include: ['created'] }
               }).then(infos => {
-                console.log("All infos:", JSON.stringify(infos, null, 4))
+                // console.log("All infos:", JSON.stringify(infos, null, 4))
                 resolve(infos)
             })
         })
@@ -51,7 +51,7 @@ TestModel.init({
     freezeTableName: true,
   
     // 定义表的名称
-    tableName: 'ws_workflow_list',
+    tableName: 'receptacles',
   
     // 启用乐观锁定。 启用后，sequelize将添加版本计数属性
     // 到模型并在保存过时实例时抛出OptimisticLockingError错误。

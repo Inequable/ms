@@ -1,12 +1,14 @@
 {
-    "host": "dds-bp198fe6bec0f2d41.mongodb.rds.aliyuncs.com",
-    "port": "3717",
-    "host_candidate": "dds-bp198fe6bec0f2d42.mongodb.rds.aliyuncs.com",
-    "port_candidate": "3717",
+    "hosts": [{
+        "host": "dds-bp198fe6bec0f2d41.mongodb.rds.aliyuncs.com",
+        "port": "3717"
+    }, {
+        "host": "dds-bp198fe6bec0f2d42.mongodb.rds.aliyuncs.com",
+        "port": "3717"
+    }],
     "db": "owdile",
     "username": "root",
     "password": "BDcpu001",
     "authdb": "admin",
     "replicaset": "mgset-5059943"
 }
-  

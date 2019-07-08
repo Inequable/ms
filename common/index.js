@@ -73,7 +73,7 @@ class Services {
                     req.connection.socket.remoteAddress || ''
             // 正则匹配ipv4
             let request_ip = ip.match(/\d+\.\d+\.\d+\.\d+/)[0]
-            // 以下两行必须注释掉，引以为戒，因为当这个运行时，会获取到ip和域名，一个为真就返回json的，会变成(1 || -1)的关系
+            // 以下两行必须注释掉，引以为戒，因为当这个运行时，会获取到ip和域名，一个为真就返回json的，会变成(1 || -1)的判断
             // let hostname = req.hostname
             // if (whitelist.indexOf(request_ip) === -1 || whitelist.indexOf(hostname) === -1) {
             if (whitelist.indexOf(request_ip) === -1) {
@@ -158,14 +158,15 @@ class Services {
         const dbConfig = this.getDBConfig('mongodb')
         const Mongodb = this.loadConnector('mongodb')
         const instance = await new Mongodb(dbConfig)
-        // const instance = mongodb.getMongoDB(callback(dbo, mongodb), dbConfig)
+        // console.log(await instance.find("apps", {}))
         return instance
     }
     // 返回redis实例，。。。待测TODO...
     getRedisInstance () {
         const dbConfig = this.getDBConfig('redis')
         const Redis = this.loadConnector('redis')
-        const instance = (new Redis()).init(dbConfig)
+        // const instance = (new Redis()).init(dbConfig)
+        const instance = new Redis(dbConfig)
         return instance
     }
 }

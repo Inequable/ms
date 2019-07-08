@@ -16,19 +16,37 @@ var MongoClient = require('mongodb').MongoClient
 class Mongodb {
     constructor (config) {
         this.config = config
-        return this.connect()
+        return this
+        // return this.connect()
     }
     // 连接
     connect () {
         return new Promise((resolve, reject) => {
             if (Mongodb.instance) {
-                console.log('mongodb连接实例已经存在')
+                // console.log('mongodb连接实例已经存在')
                 resolve(Mongodb.instance)
+                return
             }
             let config = this.config
-            let instance, username_password, url
+            let instance, username_password, hosts = [], url, authdb, replicaset
             username_password = config.username ? config.username + ':' + config.password + '@' : ''
-            url = 'mongodb://' + username_password + config.host + ':' + (config.port ? config.port : 27017) + '/'
+            if (!config.hosts) {
+                hosts = ['127.0.0.1:27017']
+            } else {
+                for (let i = 0; i < config.hosts.length; i++) {
+                    const e = config.hosts[i]
+                    if (e.host && e.port) {
+                        hosts.push(e.host+ ':' +e.port)
+                    } else {
+                        reject('主机配置有问题')
+                        return
+                    }
+                }
+            }
+            authdb = config.authdb ? config.authdb : 'admin'
+            replicaset = config.replicaset ? '?replicaSet=' + config.replicaset : ''
+            url = 'mongodb://' + username_password + hosts.join(',') + '/'
+            url += authdb + replicaset
             // https://www.runoob.com/mongodb/mongodb-connections.html 参考文献
             // url = 'mongodb://user:pass@host, host1, host2.../authdb?replicaSet=验证replica set的名称'
             MongoClient.connect(url, { useNewUrlParser: true }, function (err, client) {
@@ -38,7 +56,7 @@ class Mongodb {
                 } else {
                     instance = client.db(config.db)
                     Mongodb.instance = instance
-                    console.log('mongodb连接成功')
+                    // console.log('mongodb连接成功')
                     resolve(instance)
                 }
             })

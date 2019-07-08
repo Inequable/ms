@@ -1,13 +1,5 @@
 'use strict'
-var config_path = '../config'
-if ('dev' === process.env.NODE_ENV) {
-    config_path = '../config/dev'
-}
 var service = require('../app')
-const MongoDB = service.loadConnector('mongodb')
-const mdbConfig = require(config_path + '/mongodb.json')
-const Redis = service.loadConnector('redis')
-const rdbConfig = require(config_path + '/redis.json')
 
 module.exports = class TestDBModel{
 	constructor () {
@@ -28,32 +20,22 @@ module.exports = class TestDBModel{
     }
 
     // 测试mongodb数据库查询操作
-    getAppsAll () {
-        const instdb = service.getMongodbInstance()
-        return instdb
-        // return new Promise((resolve, reject) => {
-        //     let db = new MongoDB()
-        //     db.getMongoDB(function (dbo, db) {
-        //         dbo.collection("apps").find({}).toArray(function(err, result) { // 返回集合中所有数据
-        //             if (err) throw err
-        //             resolve(result)
-        //         })
-        //         db.close()
-        //     }, mdbConfig)
-        //     resolve(instdb.find('apps', {}))
-        // })
+    async getAppsAll () {
+        // console.time()
+        const instdb = await service.getMongodbInstance()
+        const result = await instdb.find("labels_contents", {})
+        // console.timeEnd()
+        return result
     }
 
     getRedisSet () {
-        return new Promise((resolve, reject) => {
-            let db = new Redis()
-            let client = db.init(rdbConfig)
-            client.keys('OWDILE:*', function (err, keys) {
-                if (err) {
-                    throw err
-                }
-                console.log(keys)
-            })
+        const instdb = service.getRedisInstance()
+        instdb.keys('OWDILE:*', function (err, keys) {
+            if (err) {
+                throw err
+            }
+            console.log(keys)
+            return keys
         })
     }
 }

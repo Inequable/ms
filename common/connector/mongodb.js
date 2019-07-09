@@ -16,6 +16,7 @@ var MongoClient = require('mongodb').MongoClient
 class Mongodb {
     constructor (config) {
         this.config = config
+        console.log(Mongodb.instance)
         return this
         // return this.connect()
     }
@@ -117,7 +118,7 @@ class Mongodb {
     // 更新
     update (tableName, condition, json) {
         if (this.tableNameIsNull(tableName)) {
-            reject('查询表名不能为空')
+            reject('更新操作表名不能为空')
             return
         }
         if (!json || !condition) {
@@ -142,29 +143,81 @@ class Mongodb {
             })
         })
     }
-    // 删除
-    remove (tableName, json) {
+    // 更新多条数据
+    updateMany (tableName, condition, json) {
+        if (this.tableNameIsNull(tableName)) {
+            reject('更新操作表名不能为空')
+            return
+        }
+        if (!json || !condition) {
+            reject('插入对象不能为空')
+            return
+        }
+        if (!this.jsonIsObject(json) || !this.jsonIsObject(condition)) {
+            reject('参数不是合法的json对象')
+            return
+        }
         return new Promise((resolve, reject) => {
-            if (this.tableNameIsNull(tableName)) {
-                reject('查询表名不能为空')
-                return
-            }
-            if (!json) {
-                reject('插入对象不能为空')
-                return
-            }
-            if (!this.jsonIsObject(json)) {
-                reject('参数不是合法的json对象')
-                return
-            }
             this.connect().then(db => {
-                db.collection(tableName).removeOne(json, (err,result) => {
+                db.collection(tableName).updateMany(condition, {
+                    $set: json
+                }, (err, result) => {
                     if(!err){
                         resolve(result)
                         return
                     }
                     reject(err)
                 })
+            })
+        })
+    }
+    // 删除
+    delete (tableName, condition) {
+        return new Promise((resolve, reject) => {
+            if (this.tableNameIsNull(tableName)) {
+                reject('查询表名不能为空')
+                return
+            }
+            if (!condition) {
+                reject('插入对象不能为空')
+                return
+            }
+            if (!this.jsonIsObject(condition)) {
+                reject('参数不是合法的json对象')
+                return
+            }
+            this.connect().then(db => {
+                db.collection(tableName).deleteOne(condition, (err,result) => {
+                    if(!err){
+                        resolve(result)
+                        return
+                    }
+                    reject(err)
+                })
+            })
+        })
+    }
+    // 删除多条数据
+    deleteMany (tableName, condition) {
+        if (this.tableNameIsNull(tableName)) {
+            reject('查询表名不能为空')
+            return
+        }
+        if (!condition) {
+            reject('插入对象不能为空')
+            return
+        }
+        if (!this.jsonIsObject(condition)) {
+            reject('参数不是合法的json对象')
+            return
+        }
+        return new Promise((resolve, reject) => {
+            this.connect().deleteMany(condition, (err, result) => {
+                if(!err){
+                    resolve(result)
+                    return
+                }
+                reject(err)
             })
         })
     }

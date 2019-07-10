@@ -16,7 +16,6 @@ var MongoClient = require('mongodb').MongoClient
 class Mongodb {
     constructor (config) {
         this.config = config
-        console.log(Mongodb.instance)
         return this
         // return this.connect()
     }
@@ -239,6 +238,6 @@ class Mongodb {
     }
 }
 
-Mongodb.instance = null
+// Mongodb.instance = null
 
 module.exports = Mongodb

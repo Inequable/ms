@@ -153,7 +153,7 @@ class Services {
         const sequelize = new BaseModel(dbConfig)
         return sequelize
     }
-    // 返回mongodb实例，。。。待测TODO...
+    // 返回mongodb实例
     async getMongodbInstance () {
         const dbConfig = this.getDBConfig('mongodb')
         const Mongodb = this.loadConnector('mongodb')
@@ -161,7 +161,7 @@ class Services {
         // console.log(await instance.find("apps", {}))
         return instance
     }
-    // 返回redis实例，。。。待测TODO...
+    // 返回redis实例
     getRedisInstance () {
         const dbConfig = this.getDBConfig('redis')
         const Redis = this.loadConnector('redis')

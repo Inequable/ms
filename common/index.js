@@ -169,6 +169,16 @@ class Services {
         const instance = new Redis(dbConfig)
         return instance
     }
+    // 提供可以调用unitl方法的实例
+    getFuncAll () {
+        const Func = require('./unitl/func')
+        return new Func()
+    }
+    // 提供可以调用validate类
+    getVlidate () {
+        const Validate = require('./unitl/validate')
+        return new Validate()
+    }
 }
 
 module.exports = Services

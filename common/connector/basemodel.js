@@ -7,7 +7,7 @@ class BaseModel {
     }
     init () {
         if (BaseModel.sequelize) {
-            console.log('sequelize实例已存在')
+            // console.log('sequelize实例已存在')
             return BaseModel.sequelize
         }
         let config = this.config
@@ -27,7 +27,7 @@ class BaseModel {
     }
     testConnection (sequelize) {
         sequelize.authenticate().then(() => {
-            console.log('数据库测试连接成功。')
+            // console.log('数据库测试连接成功。')
         }).catch(err => {
             console.error('数据库无法连接:', err)
         })

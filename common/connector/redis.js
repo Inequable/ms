@@ -1,21 +1,6 @@
 'use strict'
 const redis = require("redis")
 
-// var client
-// var Redis = function(){}
-// Redis.prototype.init = function (config) {
-//     if (!client) {
-//         client = redis.createClient(config)
-//         client.on('connect', function () {
-//             console.log('已连接到redis');
-//         })
-//         client.on("error", function (err) {
-//             console.log("[Error] ~ " + err)
-//         })
-//     }
-//     return client
-// }
-
 class Redis {
     constructor (config) {
         this.config = config

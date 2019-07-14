@@ -193,7 +193,7 @@ class Func {
         Object.keys(source).forEach(property => {
             const sourceProperty = source[property]
             if (typeof sourceProperty === 'object') {
-                target[property] = objectMerge(target[property], sourceProperty)
+                target[property] = this.objectMerge(target[property], sourceProperty)
             } else {
                 target[property] = sourceProperty
             }
@@ -256,7 +256,7 @@ class Func {
         const targetObj = source.constructor === Array ? [] : {}
         Object.keys(source).forEach(keys => {
             if (source[keys] && typeof source[keys] === 'object') {
-                targetObj[keys] = deepClone(source[keys])
+                targetObj[keys] = this.deepClone(source[keys])
             } else {
                 targetObj[keys] = source[keys]
             }

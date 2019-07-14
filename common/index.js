@@ -169,14 +169,14 @@ class Services {
         const instance = new Redis(dbConfig)
         return instance
     }
-    // 提供可以调用until方法的实例
+    // 提供可以调用utils方法的实例
     getFuncAll () {
-        const Func = require('./until/func')
+        const Func = require('./utils/func')
         return new Func()
     }
     // 提供可以调用validate类
     getValidate () {
-        const Validate = require('./until/validate')
+        const Validate = require('./utils/validate')
         return new Validate()
     }
 }

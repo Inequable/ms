@@ -1,6 +1,0 @@
-{
-  "host": "r-bp194668ac7d2184.redis.rds.aliyuncs.com",
-  "port": "6379",
-  "prefix": "EXPRESS",
-  "password": "BDcpu001"
-}

@@ -73,6 +73,12 @@ class Services {
                     req.connection.socket.remoteAddress || ''
             // 正则匹配ipv4
             let request_ip = ip.match(/\d+\.\d+\.\d+\.\d+/)[0]
+            // 简单做一个跨域处理
+            res.header("Access-Control-Allow-Origin", "*")
+            res.header("Access-Control-Allow-Headers", "X-Requested-With")
+            res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS")
+            res.header("X-Powered-By",' 3.2.1')
+            res.header("Content-Type", "application/json;charset=utf-8")
             // 以下两行必须注释掉，引以为戒，因为当这个运行时，会获取到ip和域名，一个为真就返回json的，会变成(1 || -1)的判断
             // let hostname = req.hostname
             // if (whitelist.indexOf(request_ip) === -1 || whitelist.indexOf(hostname) === -1) {
@@ -83,12 +89,6 @@ class Services {
                     msg: '未被认证过的 ip/域名 不允许访问'
                 })
             } else {
-                // 简单做一个跨域处理
-                res.header("Access-Control-Allow-Origin", "*")
-                res.header("Access-Control-Allow-Headers", "X-Requested-With")
-                res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS")
-                res.header("X-Powered-By",' 3.2.1')
-                res.header("Content-Type", "application/json;charset=utf-8")
                 next()
             }
         })

@@ -265,11 +265,26 @@ class Func {
     }
     
     /**
-     * 唯一数组
+     * 唯一数组，无法去重不同类型，但在表示结果是一样的数，要确保类型一致
+     * 如：uniqueArr([1,2,'1',6]) => [1,2,'1',6]
      * @param {array} arr 数组
      */
     uniqueArr (arr) {
         return Array.from(new Set(arr))
+    }
+
+    /**
+     * 数组去重，与上述方法一样
+     * @param {array} array 数组
+     */
+    uniq (array) {
+        let temp = [] //一个新的临时数组
+        for(let i = 0; i < array.length; i++){
+            if(temp.indexOf(array[i]) === -1){
+                temp.push(array[i])
+            }
+        }
+        return temp
     }
     
     /**
@@ -285,5 +300,28 @@ class Func {
      */
     isMobile () {
         return navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
+    }
+
+    /**
+     * 格式化数值，并保留几位小数
+     * @param {int} x 传入的数值
+     * @param {int} pos 保留位数
+     */
+    fomatFloat (x, pos) {
+        let f = parseFloat(x)
+        if(isNaN(f)){
+            return false
+        }   
+        f = Math.round(x*Math.pow(10, pos))/Math.pow(10, pos) // pow 幂   
+        let s = f.toString()
+        let rs = s.indexOf('.')
+        if(rs < 0){
+            rs = s.length
+            s += '.' 
+        }
+        while (s.length <= (rs + pos)) {
+            s += '0'
+        }
+        return s
     }
 }

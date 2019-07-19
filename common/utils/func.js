@@ -303,7 +303,7 @@ class Func {
     }
 
     /**
-     * 格式化数值，并保留几位小数
+     * 格式化数值，并保留几位小数，四舍五入
      * @param {int} x 传入的数值
      * @param {int} pos 保留位数
      */
@@ -323,5 +323,28 @@ class Func {
             s += '0'
         }
         return s
+    }
+    
+    /**
+     * 对参数进行去空处理，将首尾空格以及tab空格去掉
+     * @param {object} obj 数组
+     */
+    trimParams (obj) {
+        // 如果不是对象，直接将 obj 返回
+        if (typeof obj !== 'object') {
+            return obj
+        }
+        let new_obj = {}
+        for (const key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                const e = obj[key]
+                if (typeof e === 'object') {
+                    new_obj[key] = this.trimParams(e) // 回调使用
+                } else {
+                    new_obj[key] = e.trim()
+                }
+            }
+        }
+        return new_obj
     }
 }

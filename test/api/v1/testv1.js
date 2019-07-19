@@ -25,7 +25,8 @@ router.get('/testdb', async (req, res) => {
 
 router.get('/testMongodb', async (req, res) => {
     const model = new TestDBModel()
-    const result = await model.getAppsAll()
+    // const result = await model.getAppsAll()
+    const result = await model.getApps()
     res.json(result)
 })
 

@@ -1,7 +1,7 @@
 'use strict'
 var service = require('../app')
 
-module.exports = class TestDBModel{
+class TestDBModel{
 	constructor () {
 		return this
 	}
@@ -28,6 +28,24 @@ module.exports = class TestDBModel{
         return result
     }
 
+    // 使用mongodb类实力化连接，用连接池操作mongodb的内部方法
+    async getApps () {
+        const instdb = await service.getMongodbInstance()
+        return new Promise(async (resolve, reject) => {
+            await instdb.connect().then(db => {
+                let t = db.collection('apps').find({})
+                t.toArray((err, data) => {
+                    if (!err) {
+                        resolve(data)
+                        return
+                    }
+                    reject(err)
+                })
+            })
+        })
+    }
+
+    // redis单例测试
     getRedisSet () {
         const instdb = service.getRedisInstance()
         instdb.keys('OWDILE:*', function (err, keys) {
@@ -39,3 +57,5 @@ module.exports = class TestDBModel{
         })
     }
 }
+
+module.exports = TestDBModel

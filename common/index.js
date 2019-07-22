@@ -86,7 +86,7 @@ class Services {
                 res.status(200)
                 res.json({
                     code: 1,
-                    msg: '未被认证过的 ip/域名 不允许访问'
+                    msg: '未被认证过的 ip/域名 不允许访问 ' + ip
                 })
             } else {
                 next()
@@ -118,56 +118,35 @@ class Services {
     // 主要是加载基础数据库模型
     loadConnector (name) {
         const path = './connector/'
-        const dba = ['database', 'mongodb', 'redis', 'basemodel']
+        const dba = ['knex', 'mongodb', 'ioredis']
         if (dba.indexOf(name) !== -1) {
             return require(path + name)
         }
         console.log('所加载的数据库基础模型不存在， %s', name)
         return false
     }
-    // 获取加载数据库模型的json配置
-    getDBConfig (name) {
-        const dba = ['database', 'mongodb', 'redis']
-        if (dba.indexOf(name) !== -1) {
-            const all = this.allConfig
-            return all[name]
-        }
-        console.log('不存在此数据库基础模型的json配置， %s', name)
-        return false
-    }
     // 返回express，路由类
     getExpressRoute () {
         return express.Router()
     }
-    // 返回mysql实例连接池
-    getMysqlInstance () {
-        const dbConfig = this.getDBConfig('database')
-        const Database = this.loadConnector('database')
-        const instance = (new Database()).init(dbConfig)
-        return instance
-    }
-    // 返回sequelize实例
-    getSequelizeInstance () {
-        const dbConfig = this.getDBConfig('database')
-        const BaseModel = this.loadConnector('basemodel')
-        const sequelize = new BaseModel(dbConfig)
-        return sequelize
-    }
     // 返回mongodb实例
     async getMongodbInstance () {
-        const dbConfig = this.getDBConfig('mongodb')
+        const dbConfig = this.allConfig.mongodb
         const Mongodb = this.loadConnector('mongodb')
         const instance = await new Mongodb(dbConfig)
-        // console.log(await instance.find("apps", {}))
         return instance
     }
-    // 返回redis实例
+    // 返回knex实例
+    getKnexInstance () {
+        const config = this.allConfig.knex
+        const Knex = this.loadConnector('knex')
+        return new Knex(config)
+    }
+    // 返回knex实例
     getRedisInstance () {
-        const dbConfig = this.getDBConfig('redis')
-        const Redis = this.loadConnector('redis')
-        // const instance = (new Redis()).init(dbConfig)
-        const instance = new Redis(dbConfig)
-        return instance
+        const config = this.allConfig.ioredis
+        const Redis = this.loadConnector('ioredis')
+        return new Redis(config)
     }
     // 提供可以调用utils方法的实例
     getFuncAll () {

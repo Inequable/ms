@@ -6,10 +6,10 @@
 这是所有服务的一个核心框架所在
 - common                      核心文件夹
 - |——connector                数据库单例文件夹
-- |——|——basemodel.js           sequelize ORM 单例封装（主要操作- mysql）
+- |——|——basemodel.js           sequelize ORM 单例封装（主要操作- mysql）弃用，链式查询不太友好
 - |——|——database.js            mysql 使用原生的（也是操作- mysql）建议不用
 - |——|——mongodb.js             mongodb单例封装以及实现简单的dao- 操作
-- |——|——redis.js               redis单例封装
+- |——|——redis.js               redis单例封装，弃用，有些操作会不太方便
 - |——index.js                 服务核心文件
 - |——package-lock.json
 - |——package.json             npm安装所有的包依赖
@@ -37,6 +37,19 @@ test                        这是一个模范使用这个服务的测试服务
 - |——model                    模型操作
 - |——app.js                   加载核心服务文件
 - |——index.js                 启动服务文件
+
+# 模块的选用
+
+1. mysql使用 Knex 模块组件
+> ask：为什么使用这个 `knex` ，而不是 `sequelize` 或者 原生 `mysql` 呢？
+
+> answer：使用原生 `mysql` 对于快速，敏捷开发来说太耗费时间了，对一些数据的操作也要耗费时间去处理才能将之实现成原生能接收的数据类型；使用 `sequelize` 对于习惯操作PHP的phper来说，查询等的链式操作，不太合适phper的开发习惯，而且相对来说会比较庞大一点。使用 `knex` ，摒弃上面所列举到几个缺点，同时又拥有两个模块的优点，对于敏捷开发足够了。 `https://knexjs.org/#Installation-node`
+
+2. redis使用 `ioredis` 模块组件
+> ask：为什么使用 `ioredis` ，而不使用  `redis` 呢？
+
+> answer：其实 `ioredis` 与 `redis` 使用方法类似，`ioredis` 是一个功能强大，功能齐全的Redis客户端，用于世界上最大的在线商务公司阿里巴巴和许多其他令人敬畏的公司。 `https://github.com/luin/ioredis/blob/master/API.md#new_Redis`
+
 
 # 代码规范
 

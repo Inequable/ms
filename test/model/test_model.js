@@ -8,14 +8,9 @@ class TestDBModel{
 
     // 测试mysql数据库的查询操作
     getLogisticsAll () {
-        const instdb = service.getMysqlInstance()
+        const knex = service.getKnexInstance()
         return new Promise((resolve, reject) => {
-            let sql = 'SELECT * FROM `receptacles`'
-            instdb.query(sql, function (err, rows, fields) {
-                if (err) throw err
-                resolve(rows)
-            })
-            instdb.end()
+            resolve(knex.select().table('finacial_bill'))
         })
     }
 
@@ -47,13 +42,15 @@ class TestDBModel{
 
     // redis单例测试
     getRedisSet () {
-        const instdb = service.getRedisInstance()
-        instdb.keys('OWDILE:*', function (err, keys) {
-            if (err) {
-                throw err
-            }
-            console.log(keys)
-            return keys
+        const redis = service.getRedisInstance()
+        return new Promise((resolve, reject) => {
+            redis.keys('OWDILE:*', function (err, keys) {
+                if (err) {
+                    throw err
+                }
+                console.log(keys)
+                resolve(keys)
+            })
         })
     }
 }

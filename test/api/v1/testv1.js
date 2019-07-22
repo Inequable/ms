@@ -2,7 +2,6 @@ var service = require('../../app')
 var router = service.getExpressRoute()
 const path = '../../model/'
 var TestDBModel = require(path + 'test_model')
-var TestModel = require(path + 'test')
 // 读取node-xlsx模块，用于解析或导入文件
 var xlsx = service.loadModules('node-xlsx').default
 var fs = service.loadModules('fs')
@@ -35,13 +34,7 @@ router.get('/testMongodb', async (req, res) => {
 
 router.get('/redistest', async (req, res) => {
     const model = new TestDBModel()
-    await model.getRedisSet()
-})
-
-router.get('/testSequelize', async (req, res) => {
-    const model = new TestModel()
-    const result = await model.getAll()
-    res.json(result)
+    res.json(await model.getRedisSet())
 })
 
 // 测试node-xlsx生成文件 Building a xlsx

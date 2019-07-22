@@ -1,6 +1,6 @@
 var service = require('../../app')
 var router = service.getExpressRoute()
-const path = '../../model/'
+const path = '../../models/'
 var TestDBModel = require(path + 'test_model')
 // 读取node-xlsx模块，用于解析或导入文件
 var xlsx = service.loadModules('node-xlsx').default

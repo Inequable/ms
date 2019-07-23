@@ -118,7 +118,7 @@ class Services {
     // 主要是加载基础数据库模型
     loadConnector (name) {
         const path = './connector/'
-        const dba = ['knex', 'mongodb', 'ioredis']
+        const dba = ['knex', 'mongodb', 'ioredis', 'mysql']
         if (dba.indexOf(name) !== -1) {
             return require(path + name)
         }
@@ -141,6 +141,13 @@ class Services {
         const config = this.allConfig.knex
         const Knex = this.loadConnector('knex')
         return new Knex(config)
+    }
+    // 返回mysql实例连接池
+    getMysqlInstance () {
+        const config = this.allConfig.knex
+        const Mysql = this.loadConnector('mysql')
+        const instance = (new Mysql()).init(config.connection)
+        return instance
     }
     // 返回knex实例
     getRedisInstance () {

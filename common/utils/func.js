@@ -348,3 +348,5 @@ class Func {
         return new_obj
     }
 }
+
+module.exports = Func

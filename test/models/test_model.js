@@ -9,7 +9,21 @@ class TestDBModel{
     // 测试mysql数据库的查询操作
     async getLogisticsAll () {
         const knex = service.getKnexInstance()
-        return await knex.select().table('finacial_bill_items')
+        return await knex('finacial_bill').limit(1).where({
+            id: 1
+        }).update({status: '1'})
+    }
+
+    async getMysql () {
+        const mysql = service.getMysqlInstance()
+        return new Promise((resolve, reject) => {
+            mysql.query('select 1+1 as result', (err, result) => {
+                if (err) {
+                    throw new Error(err)
+                }
+                resolve(result)
+            })
+        })
     }
 
     // 测试mongodb数据库查询操作

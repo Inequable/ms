@@ -9,7 +9,7 @@ class Knex {
     }
     init () {
         if (Knex.instance) {
-            console.log('knex 已经实例化了')
+            // console.log('knex 已经实例化了')
             return Knex.instance
         }
         if (!this.config) {

@@ -7,11 +7,9 @@ class TestDBModel{
 	}
 
     // 测试mysql数据库的查询操作
-    getLogisticsAll () {
+    async getLogisticsAll () {
         const knex = service.getKnexInstance()
-        return new Promise((resolve, reject) => {
-            resolve(knex.select().table('finacial_bill'))
-        })
+        return await knex.select().table('finacial_bill_items')
     }
 
     // 测试mongodb数据库查询操作

@@ -2,9 +2,9 @@
 const crypto = require('crypto')
 
 /**
- * 公共函数类
+ * 助手函数类
  */
-class Func {
+class Helper {
     constructor () {
         return this
     }
@@ -369,4 +369,4 @@ class Func {
     
 }
 
-module.exports = Func
+module.exports = Helper

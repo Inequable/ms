@@ -200,9 +200,9 @@ class Services {
     /**
      * 提供可以调用utils方法的实例
      */
-    getFuncAll () {
-        const Func = require('./utils/func')
-        return new Func()
+    getHelper () {
+        const Helper = require('./utils/helper')
+        return new Helper()
     }
     
     /**
@@ -211,6 +211,14 @@ class Services {
     getValidate () {
         const Validate = require('./utils/validate')
         return new Validate()
+    }
+
+    /**
+     * 加载utils文件夹下的类文件
+     * @param {string} name 工具包的名称
+     */
+    getUtilsPackage (name) {
+        return require('./utils/'+ name)
     }
     
 }

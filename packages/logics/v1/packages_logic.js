@@ -11,7 +11,7 @@ const DestinationAddressModel = require(path + 'destination_address_model')
 const PackagesRelationsModel = require(path + 'packages_relations_model')
 const PackagesProductsModel = require(path + 'packages_products_model')
 const Constants = require(config_path + 'constants')
-const func = service.getFuncAll()
+const helper = service.getHelper()
 
 class PackagesLogic {
     constructor () {}
@@ -132,7 +132,7 @@ class PackagesLogic {
         }
 
         // 获取新建记录的id，用于生成code，然后更新其新建的记录
-        code = func.idCodeSalting(id[0])
+        code = helper.idCodeSalting(id[0])
 
         // 更新新建的大包裹记录，code值赋予package_code/logistics_code/label_code
         let update_result = await pkg_model.updatePackages({
@@ -216,7 +216,7 @@ class PackagesLogic {
         pkg_infos[0].goods_descriptions = clearances_infos[0].goods_descriptions
 
         // 将价值转化成浮点型小数，而且保留两位小数
-        pkg_infos[0].insurance = func.fomatFloat(pkg_infos[0].insurance, 2)
+        pkg_infos[0].insurance = helper.fomatFloat(pkg_infos[0].insurance, 2)
 
         // 查询是否重复将小包裹加入大包裹中，去重
         // 主要将小包裹id去redis中查是否存在
@@ -282,7 +282,7 @@ class PackagesLogic {
             }
         })
         await redis.expire(package_token, 86400)
-        return { ret: 0, msg: '数据回显', data: { list: pkg_infos, total_insurance: func.fomatFloat(total, 2)}}
+        return { ret: 0, msg: '数据回显', data: { list: pkg_infos, total_insurance: helper.fomatFloat(total, 2)}}
 
     }
 
@@ -412,7 +412,7 @@ class PackagesLogic {
             destination_code: destination_code,
             weight_rated: total_weight,
             weight_report: total_weight,
-            insurance: func.fomatFloat(total_insurance, 2)
+            insurance: helper.fomatFloat(total_insurance, 2)
         }, { id: pkg_infos[0].id })
         if (!update_package) {
             await pkg_model.rollback(msg)
@@ -459,7 +459,7 @@ class PackagesLogic {
             clearance_country: addr_result[0].country,
             status_clearance: 0,
             status_router: 0,
-            goods_descriptions: (func.uniq((func.uniq(goods_descriptions_list)).join(',').split(','))).join(','), // 将商品描述数组去重后，在拼接成字符串，需要使用两次分割（join,split）
+            goods_descriptions: (helper.uniq((helper.uniq(goods_descriptions_list)).join(',').split(','))).join(','), // 将商品描述数组去重后，在拼接成字符串，需要使用两次分割（join,split）
             created: (new Date()*1)/1000
         })
         if (!add_clearances) {

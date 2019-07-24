@@ -10,7 +10,10 @@ class Services {
         this.allConfig = allConfig
         return this
     }
-    // 初始化服务
+    
+    /**
+     * 初始化服务
+     */
     init () {
         const service_base_path = this.getProjectPath()
 
@@ -37,11 +40,16 @@ class Services {
             console.log("服务已启动，访问地址为：http://%s:%s", host, port)
         })
     }
-    // 获取启动项目的全路径
+
+    /**
+     * 获取启动项目的全路径
+     */
     getProjectPath () {
         return this.allConfig.project_path
     }
-    // 获取系统服务配置
+    /**
+     * 获取系统服务配置
+     */
     getSysConfig () {
         const config = this.allConfig.sys
         const pattern = /^\d+$/
@@ -54,7 +62,10 @@ class Services {
             port: config.port ? config.port : 8080
         }
     }
-    // 获取权限配置
+
+    /**
+     * 获取权限配置
+     */
     getAccessConfig () {
         const config = this.allConfig.access
         if (config.whitelist.constructor !== Array) {
@@ -63,7 +74,11 @@ class Services {
         }
         return config
     }
-    // 设置设置允许访问应用服务的白名单（目前规则验证IP）
+    
+    /**
+     * 设置设置允许访问应用服务的白名单（目前规则验证IP）
+     * @param {array} whitelist 白名单数组
+     */
     setWhitelist (whitelist) {
         app.all('*', function (req, res, next) {
             // 获取客户端的真实IP
@@ -93,7 +108,10 @@ class Services {
             }
         })
     }
-    // 获取路由配置
+    
+    /**
+     * 获取路由配置
+     */
     getRouterConfig () {
         const config = this.allConfig.router
         if (config.constructor !== Array) {
@@ -102,7 +120,11 @@ class Services {
         }
         return config
     }
-    // 加在node_modules里的模块
+    
+    /**
+     * 加载node_modules里的模块
+     * @param {string} name node_modules模块名称
+     */
     loadModules (name) {
         if (!name) {
             console.log('要加载的模块名称不能为空')
@@ -115,7 +137,11 @@ class Services {
             return false
         }
     }
-    // 主要是加载基础数据库模型
+    
+    /**
+     * 主要是加载基础数据库模型
+     * @param {string} name 加载数据连接实例类
+     */
     loadConnector (name) {
         const path = './connector/'
         const dba = ['knex', 'mongodb', 'ioredis', 'mysql']
@@ -125,46 +151,68 @@ class Services {
         console.log('所加载的数据库基础模型不存在， %s', name)
         return false
     }
-    // 返回express，路由类
+    
+    /**
+     * 返回express，路由类
+     */
     getExpressRoute () {
         return express.Router()
     }
-    // 返回mongodb实例
+    
+    /**
+     * 返回mongodb实例
+     */
     async getMongodbInstance () {
         const dbConfig = this.allConfig.mongodb
         const Mongodb = this.loadConnector('mongodb')
         const instance = await new Mongodb(dbConfig)
         return instance
     }
-    // 返回knex实例
+    
+    /**
+     * 返回knex实例
+     */
     getKnexInstance () {
         const config = this.allConfig.knex
         const Knex = this.loadConnector('knex')
         return new Knex(config)
     }
-    // 返回mysql实例连接池
+    
+    /**
+     * 返回mysql实例连接池
+     */
     getMysqlInstance () {
         const config = this.allConfig.knex
         const Mysql = this.loadConnector('mysql')
         const instance = (new Mysql()).init(config.connection)
         return instance
     }
-    // 返回knex实例
+
+    /**
+     * 返回knex实例
+     */
     getRedisInstance () {
         const config = this.allConfig.ioredis
         const Redis = this.loadConnector('ioredis')
         return new Redis(config)
     }
-    // 提供可以调用utils方法的实例
+
+    /**
+     * 提供可以调用utils方法的实例
+     */
     getFuncAll () {
         const Func = require('./utils/func')
         return new Func()
     }
-    // 提供可以调用validate类
+    
+    /**
+     * 提供可以调用validate类
+     */
     getValidate () {
         const Validate = require('./utils/validate')
         return new Validate()
     }
+    
 }
 
 module.exports = Services

@@ -1,5 +1,9 @@
-// 公共函数类
+// 这是一个加密的nodejs模块
+const crypto = require('crypto')
 
+/**
+ * 公共函数类
+ */
 class Func {
     constructor () {
         return this
@@ -347,6 +351,22 @@ class Func {
         }
         return new_obj
     }
+
+    /**
+     * id数字加盐
+     * 12345 => 5734612345
+     */
+    idCodeSalting (id) {
+        id = id.toString()
+        let md5 = crypto.createHash('md5')
+        // 获取id的长度
+        let idLength = id.length
+        // 用正则匹配替换获得所有数字串
+        let number = md5.update(id + 42).digest('hex').replace(/[a-zA-Z]+/g, '')
+        // 拼接成固定的字符串返回
+        return (10 - idLength > 0) ? '0' + number.substring(0, 10 - idLength) + id : id
+    }
+    
 }
 
 module.exports = Func

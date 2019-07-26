@@ -94,6 +94,11 @@ class Services {
             res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS")
             res.header("X-Powered-By",' 3.2.1')
             res.header("Content-Type", "application/json;charset=utf-8")
+            // 如果设置了白名单为 ‘*’ 则代表允许全部
+            if (whitelist.indexOf('*') >= 0) {
+                next()
+                return
+            }
             // 以下两行必须注释掉，引以为戒，因为当这个运行时，会获取到ip和域名，一个为真就返回json的，会变成(1 || -1)的判断
             // let hostname = req.hostname
             // if (whitelist.indexOf(request_ip) === -1 || whitelist.indexOf(hostname) === -1) {

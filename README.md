@@ -9,6 +9,7 @@
 - |——|——kenx.js                knex ORM 单例封装（主要操作- mysql）
 - |——|——mongodb.js             mongodb单例封装以及实现简单的dao- 操作
 - |——|——ioredis.js             redis单例封装
+- |——|——mysql.js               原生mysql单例封装
 - |——index.js                  服务核心文件
 - |——package-lock.json
 - |——package.json              npm安装所有的包依赖
@@ -58,6 +59,7 @@ test                           这是一个模范使用这个服务的测试服�
 5. 代码缩进一致，统一使用（tab或者空格 `4` 进行缩进）
 6. 不能使用 `关键字` 充当变量
 7. 尽量不要在模块中使用 `var` 变量
+8. 自定义常量统一用大写标识
 
 # 注释规范
 

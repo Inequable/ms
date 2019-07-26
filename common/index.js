@@ -39,6 +39,7 @@ class Services {
             access.whitelist.push(host)
             console.log("服务已启动，访问地址为：http://%s:%s", host, port)
         })
+        return server
     }
 
     /**

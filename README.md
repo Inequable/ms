@@ -1,6 +1,6 @@
 # 框架结构
 
-这是一个有express搭建而成的服务，运行开发模式，使用命令：
+这是一个有express搭建而成的服务，运行开发模式， `这个服务框架已被限制在开发接口的基础上了` ,使用命令：
 ` set NODE_ENV=dev && node xxx.js (windows)   export NODE_ENV=dev && node xxx.js (linux|Mac) ` 建议分开运行
 
 这是所有服务的一个核心框架所在

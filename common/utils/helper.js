@@ -1,3 +1,5 @@
+'use strict'
+
 // 这是一个加密的nodejs模块
 const crypto = require('crypto')
 

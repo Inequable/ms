@@ -5,6 +5,7 @@ var TestDBModel = require(path + 'test_model')
 // 读取node-xlsx模块，用于解析或导入文件
 var xlsx = service.loadModules('node-xlsx').default
 var fs = service.loadModules('fs')
+var OS = service.getUtilsPackage('os')
 
 router.get('/test', function (req, res) {
     res.status(200)
@@ -66,6 +67,11 @@ router.get('/textBuildingXlsx', function (req, res) {
 router.get('/testReadXLsx', function (req, res) {
     const obj = xlsx.parse('F:/express-project/ms/test/public/ups.csv')
     res.json(obj)
+})
+
+router.get('/os', function (req, res) {
+    let os = new OS()
+    res.json(os.system())
 })
 
 module.exports = router

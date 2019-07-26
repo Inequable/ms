@@ -1,5 +1,6 @@
-// 自定义验证类，一般是正则的
+'use strict'
 
+// 自定义验证类，一般是正则的
 class Validate {
     constructor () {
         return this
@@ -10,8 +11,8 @@ class Validate {
      * @param {string} uri
      */
     validateURL (uri) {
-        const urlregex = /^(https?|ftp):\/\/([a-zA-Z0-9.-]+(:[a-zA-Z0-9.&%$-]+)*@)*((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}|([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2}))(:[0-9]+)*(\/($|[a-zA-Z0-9.,?'\\+&%$#=~_-]+))*$/
-        return urlregex.test(uri)
+        const url_regex = /^(https?|ftp):\/\/([a-zA-Z0-9.-]+(:[a-zA-Z0-9.&%$-]+)*@)*((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}|([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2}))(:[0-9]+)*(\/($|[a-zA-Z0-9.,?'\\+&%$#=~_-]+))*$/
+        return url_regex.test(uri)
     }
 
     /**
@@ -80,7 +81,7 @@ class Validate {
     /**
      * 身份证号(18位数字)，最后一位是校验位，可能为数字或字符X
      * 只验证18位身份证，不做15位的验证
-     * @param {string} domain
+     * @param {string} IDCard
      */
     validateIDCard (IDCard) {
         if (!(/^\d{17}(\d|x)$/i).test(IDCard)) {

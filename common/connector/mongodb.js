@@ -18,7 +18,7 @@ class Mongodb {
             let config = this.config
             let instance, username_password, hosts = [], url, authdb, replicaset
             username_password = config.username ? config.username + ':' + config.password + '@' : ''
-            if (!config.hosts) {
+            if (config.hosts.length === 0) {
                 hosts = ['127.0.0.1:27017']
             } else {
                 for (let i = 0; i < config.hosts.length; i++) {

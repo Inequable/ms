@@ -12,6 +12,7 @@ const PackagesRelationsModel = require(path + 'packages_relations_model')
 const PackagesProductsModel = require(path + 'packages_products_model')
 const Constants = require(config_path + 'constants')
 const helper = service.getHelper()
+const ExpressRules = require('../../logic/express_rules')
 
 class PackagesLogic {
     constructor () {}
@@ -182,8 +183,14 @@ class PackagesLogic {
         if (!small_code || small_code.length < 8) {
             return { ret: -1, msg: '包裹条码不能为空，并且大于8位' }
         }
+
         // 暂时的一个截取，去掉前8位数，在实际使用需要这样
-        small_code = small_code.substring(8, small_code.length)
+        // small_code = small_code.substring(8, small_code.length)
+        let rule_result = new ExpressRules(small_code)
+        if (rule_result.ret === -1) {
+            return rule_result
+        }
+        small_code = rule_result.data
 
         // 用label_code 查询一个id
         let pkg_info_id = await pkg_model.getPackages(['id'], { label_code: small_code })

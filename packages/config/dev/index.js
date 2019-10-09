@@ -25,9 +25,9 @@ module.exports = {
             port: '27017'
         }],
         db: 'owdile',
-        username: '',
-        password: '',
-        authdb: '',
+        username: 'admin',
+        password: 'www.influx.c0m',
+        authdb: 'admin',
         replicaset: ''
     },
 
@@ -51,8 +51,8 @@ module.exports = {
 
     // host config 主机访问
     sys: {
-        host: '172.16.2.234',
-        port: '8083'
+        host: '127.0.0.1',
+        port: '8080'
     },
 
     // router config 路由，数组对象

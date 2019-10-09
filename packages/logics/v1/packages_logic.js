@@ -12,7 +12,7 @@ const PackagesRelationsModel = require(path + 'packages_relations_model')
 const PackagesProductsModel = require(path + 'packages_products_model')
 const Constants = require(config_path + 'constants')
 const helper = service.getHelper()
-const ExpressRules = require('../../logic/express_rules')
+const ExpressRules = require('../../logics/v1/express_rules')
 
 class PackagesLogic {
     constructor () {}

@@ -1,5 +1,5 @@
 const service = require('../../app') // 加载服务类
-const func = service.getFuncAll() // 加载服务类中的function函数类
+const func = service.getHelper() // 加载服务类中的function函数类
 const router = service.getExpressRoute() // 加载路由
 const path = '../../logics/v1/'
 const PackagesLogic = require(path + 'packages_logic')

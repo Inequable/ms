@@ -25,9 +25,9 @@ module.exports = {
             port: '27017'
         }],
         db: 'owdile',
-        username: '',
-        password: '',
-        authdb: '',
+        username: 'admin',
+        password: 'www.influx.c0m',
+        authdb: 'admin',
         replicaset: ''
     },
 
